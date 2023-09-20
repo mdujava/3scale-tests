@@ -1,6 +1,8 @@
 name: acceptance
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches: [ main ]
 jobs:
@@ -28,5 +30,18 @@ jobs:
           key: ${{ runner.os }}-w${{ steps.weeknum.outputs.weeknum }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('Pipfile') }}
       - name: Install dependencies
         run: PIPENV_VERBOSITY=-1 make fake-sync pipenv-dev
-      - name: Run acceptance check
-        run: PIPENV_VERBOSITY=-1 make -k commit-acceptance
+      - uses: ricardochaves/python-lint@v1.4.0
+        with:
+          python-root-list: "testsuite"
+          use-pylint: true
+          use-pycodestyle: false
+          use-flake8: true
+          use-black: false
+          use-mypy: true
+          use-isort: false
+          extra-pylint-options: ""
+          extra-pycodestyle-options: ""
+          extra-flake8-options: ""
+          extra-black-options: ""
+          extra-mypy-options: ""
+          extra-isort-options: ""
