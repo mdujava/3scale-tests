@@ -3,10 +3,10 @@ Conftest for the jaeger tests
 """
 
 from weakget import weakget
-import pytest
 
 from testsuite.jaeger import Jaeger
 
+import pytest
 
 @pytest.fixture(scope="module")
 def jaeger(testconfig, tools):
@@ -16,6 +16,7 @@ def jaeger(testconfig, tools):
     """
 
     url = weakget(testconfig)["fixtures"]["jaeger"]["url"] % tools["jaeger"]
+    a = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     return Jaeger(url, testconfig["fixtures"]["jaeger"]["config"], testconfig["ssl_verify"])
 
 
