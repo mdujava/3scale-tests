@@ -30,5 +30,12 @@ jobs:
           key: ${{ runner.os }}-w${{ steps.weeknum.outputs.weeknum }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('Pipfile') }}
       - name: Install dependencies
         run: PIPENV_VERBOSITY=-1 make fake-sync pipenv-dev
+      - name: Generate requirements.txt file
+        run: |
+          pip install pipenv
+          pipenv requirements > requirements.txt
+          pip install -r requirements.txt
+      - name: Run linters
+        uses: karpikpl/pylint-action@1.1.0
       - name: Run acceptance check
-        run: PIPENV_VERBOSITY=-1 make -k commit-acceptance
+        run: PIPENV_VERBOSITY=-1 make -k all-is-package
