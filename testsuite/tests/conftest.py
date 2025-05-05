@@ -9,7 +9,6 @@ import signal
 import threading
 import warnings
 from itertools import chain
-from typing import List
 
 import backoff
 import importlib_resources as resources
@@ -563,7 +562,7 @@ def custom_provider_account_user(request, threescale, testconfig):
 def provider_member_user(threescale, request, testconfig, account_password):
     """Create users and set permissions to sections and services by given scope"""
 
-    def _member_user(autoclean=True, allowed_sections: List[str] = None, allowed_services: List[int] = None):
+    def _member_user(autoclean=True, allowed_sections: list[str] = None, allowed_services: list[int] = None):
         """Create users and set permissions to sections and services
         Args:
             :param allowed_section: List of allowed sections one of

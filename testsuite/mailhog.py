@@ -2,7 +2,6 @@
 This module contains wrapper for the Mailhog API
 """
 
-from typing import Set, Optional
 import backoff
 import pytest
 import requests
@@ -16,9 +15,7 @@ from testsuite.openshift.client import OpenShiftClient
 class MailhogClient:
     """Wrapper for the mailhog API"""
 
-    def __init__(
-        self, openshift: OpenShiftClient, mailhog_service_name: str = "mailhog", fallback: Optional[str] = None
-    ):
+    def __init__(self, openshift: OpenShiftClient, mailhog_service_name: str = "mailhog", fallback: str | None = None):
         """Initializes the client, the mailhog app has to be running in the
         same openshift as 3scale, and has to be named 'mailhog'"""
         # mailhog is first searched in 3scale namespace, if that fails
@@ -36,7 +33,7 @@ class MailhogClient:
             else:
                 warn_and_skip("Can't find mailhog, skipping mailhog related tests")
 
-        self._searched_messages_ids: Set[str] = set()
+        self._searched_messages_ids: set[str] = set()
         self._session = requests.Session()
 
     @property
@@ -67,7 +64,7 @@ class MailhogClient:
             all_messages.extend(messages)
         return all_messages
 
-    def get_messages_by_chunk(self, chunk_size: int = 250, limit: Optional[int] = None):
+    def get_messages_by_chunk(self, chunk_size: int = 250, limit: int | None = None):
         """
         A generator function that retrieves all MailHog messages in chunks.
         @param chunk_size: The number of messages to retrieve in each chunk (default 100).

@@ -1,7 +1,7 @@
 """Module containing all basic gateways"""
 
 from abc import ABC, abstractmethod
-from typing import Set, Type, TypeVar, Union
+from typing import TypeVar
 
 from testsuite.capabilities import Capability
 from testsuite.configuration import SettingsParser
@@ -12,7 +12,7 @@ from testsuite.openshift.env import Properties
 class AbstractGateway(LifecycleHook, ABC):
     """Basic gateway for use with Apicast"""
 
-    CAPABILITIES: Set[Capability] = set()
+    CAPABILITIES: set[Capability] = set()
     HAS_PRODUCTION = False
 
     @property
@@ -33,7 +33,7 @@ Gateway = TypeVar("Gateway", bound=AbstractGateway)
 
 
 def new_gateway(
-    kinds: dict, settings_, kind: Union[Type[Gateway], str] = None, staging: bool = True, **kwargs
+    kinds: dict, settings_, kind: type[Gateway] | str | None = None, staging: bool = True, **kwargs
 ) -> Gateway:
     """Low-level function to initialize gateway of given type. Not to be used directly.
 

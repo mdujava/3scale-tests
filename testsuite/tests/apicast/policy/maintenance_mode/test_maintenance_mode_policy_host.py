@@ -4,7 +4,6 @@ This policy should override others and reject all requests.
 Expected: to return specified code eg 328 and message of service unavailability.
 """
 
-from typing import Tuple
 from urllib.parse import urlparse
 
 import pytest
@@ -97,7 +96,7 @@ def policy_settings_alt(service, echo_api_base_url) -> dict:
 
 @pytest_cases.fixture
 @pytest_cases.parametrize_with_cases("case_data", cases=config_cases_host)
-def config(case_data, service) -> Tuple[int, str]:
+def config(case_data, service) -> tuple[int, str]:
     """returns the policy object with the specified configuration"""
     status_code, message, policy_config = case_data
     service.proxy.list().policies.append(rawobj.PolicyConfig("maintenance_mode", policy_config))

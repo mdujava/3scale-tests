@@ -3,11 +3,10 @@ Configuration for custom metric policy test
 This file contains different cases for testing.
 """
 
-from typing import Tuple, List
 from testsuite import rawobj
 
 
-def case_simple() -> Tuple[dict, List[tuple], List[str]]:
+def case_simple() -> tuple[dict, list[tuple], list[str]]:
     """
     Case with a condition matching 403 status code
     """
@@ -17,7 +16,7 @@ def case_simple() -> Tuple[dict, List[tuple], List[str]]:
     return policy, calls, metrics
 
 
-def case_header_increment() -> Tuple[dict, List[tuple], List[str]]:
+def case_header_increment() -> tuple[dict, list[tuple], list[str]]:
     """
     Case matching a 200 status code, incrementing by the value sent in the 'increment' header in the
     upstream API response
@@ -31,7 +30,7 @@ def case_header_increment() -> Tuple[dict, List[tuple], List[str]]:
     return policy, calls, metrics
 
 
-def case_matches() -> Tuple[dict, List[tuple], List[str]]:
+def case_matches() -> tuple[dict, list[tuple], list[str]]:
     """
     Case matching based on the regular expressions (PCRE)
     """
@@ -43,7 +42,7 @@ def case_matches() -> Tuple[dict, List[tuple], List[str]]:
     return policy, calls, metrics
 
 
-def case_matches_multiple_rules() -> Tuple[dict, List[tuple], List[str]]:
+def case_matches_multiple_rules() -> tuple[dict, list[tuple], list[str]]:
     """
     Case with a multiple rules incrementing multiple metrics at once
     """
@@ -55,7 +54,7 @@ def case_matches_multiple_rules() -> Tuple[dict, List[tuple], List[str]]:
     return policy, calls, metrics
 
 
-def case_liquid_filter() -> Tuple[dict, List[tuple], List[str]]:
+def case_liquid_filter() -> tuple[dict, list[tuple], list[str]]:
     """
     Case incrementing the metric based on the liquid filtering and the status code value
     """

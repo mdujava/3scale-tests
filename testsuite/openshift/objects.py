@@ -5,7 +5,6 @@ import enum
 import math
 import typing
 from io import StringIO
-from typing import List, Union
 import yaml
 
 from testsuite.certificates import Certificate
@@ -38,7 +37,7 @@ class RemoteMapping:
         self._client = client
         self._resource_name = resource_name
 
-    def do_action(self, verb: str, cmd_args: List[Union[str, List[str]]] = None, auto_raise: bool = True):
+    def do_action(self, verb: str, cmd_args: list[str | list[str]] = None, auto_raise: bool = True):
         """Executes command and returns output in yaml format"""
         cmd_args = cmd_args or []
         cmd_args.extend(["-o", "yaml"])
@@ -143,10 +142,10 @@ class Secrets(RemoteMapping):
         name: str,
         kind: SecretKinds = SecretKinds.GENERIC,
         secret_type: SecretTypes = None,
-        string_data: typing.Dict[str, str] = None,
-        files: typing.Dict[str, str] = None,
+        string_data: dict[str, str] = None,
+        files: dict[str, str] = None,
         certificate: Certificate = None,
-        labels: typing.Dict[str, str] = None,
+        labels: dict[str, str] = None,
     ):
         """Create a new secret.
 
@@ -196,7 +195,7 @@ class ConfigMaps(RemoteMapping):
     def __setitem__(self, name, value):
         raise NotImplementedError()
 
-    def add(self, name, literals: typing.Dict[str, str] = None):
+    def add(self, name, literals: dict[str, str] = None):
         """Add new ConfigMap.
 
         Args:

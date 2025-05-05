@@ -6,7 +6,6 @@ All access logs must be appended to the file set to the parameter.
 
 import re
 import tempfile
-from typing import Tuple
 from urllib.parse import urlparse
 
 import pytest
@@ -58,7 +57,7 @@ def read_log(staging_gateway):
     number of lines logged into it.
     """
 
-    def read(filename) -> Tuple[str, int]:
+    def read(filename) -> tuple[str, int]:
         source = f"/tmp/{filename}"
 
         # tmpdir is used as destination for files to rsync, file is only read

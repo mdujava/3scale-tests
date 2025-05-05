@@ -2,7 +2,6 @@
 
 import logging
 from datetime import datetime
-from typing import Optional
 
 from threescale_api.resources import Application, Service
 
@@ -111,7 +110,7 @@ class TLSApicast(AbstractApicast):
     def reload(self):
         self.gateway.reload()
 
-    def get_logs(self, since_time: Optional[datetime] = None) -> str:
+    def get_logs(self, since_time: datetime | None = None) -> str:
         return self.gateway.get_logs(since_time)
 
     def __getattr__(self, item):

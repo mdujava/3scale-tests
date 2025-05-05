@@ -7,7 +7,8 @@ Capabilities are provider by a functions annotated with @capability_provider and
 """
 
 import enum
-from typing import Set, Callable, Any, Tuple, List
+from typing import Any
+from collections.abc import Callable
 
 # Users should have access only to these public methods/decorators
 __all__ = ["CapabilityRegistry", "Capability"]
@@ -44,7 +45,7 @@ class Singleton(type):
         return cls._instance
 
 
-Provider = Callable[[], Set[Any]]
+Provider = Callable[[], set[Any]]
 
 
 class CapabilityRegistry(metaclass=Singleton):
@@ -52,11 +53,11 @@ class CapabilityRegistry(metaclass=Singleton):
 
     def __init__(self) -> None:
         super().__init__()
-        self.providers: List[Tuple[Set[Any], Provider]] = []
-        self.discovered: Set[Any] = set()
-        self.capabilities: Set[Any] = set()
+        self.providers: list[tuple[set[Any], Provider]] = []
+        self.discovered: set[Any] = set()
+        self.capabilities: set[Any] = set()
 
-    def register_provider(self, provider: Provider, provides: Set[Any]):
+    def register_provider(self, provider: Provider, provides: set[Any]):
         """Register new capability provider"""
         self.providers.append((provides, provider))
 

@@ -5,8 +5,6 @@ Each case_ function is used as policy configuration for test
                                    2nd: True if the condition was applied, false otherwise
 """
 
-from typing import Tuple
-
 from pytest_cases import parametrize
 
 from testsuite import rawobj
@@ -17,7 +15,7 @@ DEFAULT_BURST = 1
 
 
 @parametrize("scope", ["service", "global"])
-def case_matching_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_matching_simple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """Simple case of leaky bucket limiter with matching condition"""
     configuration = [config(operation_conf(), scope)]
     policy_config = leaky_bucket_policy(configuration, redis_url(scope))
@@ -25,7 +23,7 @@ def case_matching_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
 
 
 @parametrize("scope", ["service", "global"])
-def case_matching_liquid_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_matching_liquid_simple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """Case with matching condition using liquid"""
     configuration = [
         config(operation_conf(operation="matches", left="{{ uri }}", left_type="liquid", right="/.*"), scope)
@@ -35,7 +33,7 @@ def case_matching_liquid_simple(scope: str, redis_url) -> Tuple[dict, bool, str]
 
 
 @parametrize("scope", ["service", "global"])
-def case_matching_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_matching_multiple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """
     Case with 2 leaky bucket limiters with matching condition
         First leaky bucket limiter:
@@ -51,7 +49,7 @@ def case_matching_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
 
 
 @parametrize("scope", ["service", "global"])
-def case_matching_prepend_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_matching_prepend_multiple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """
     Case with 2 leaky bucket limiters with matching condition
         First leaky bucket limiter:
@@ -67,7 +65,7 @@ def case_matching_prepend_multiple(scope: str, redis_url) -> Tuple[dict, bool, s
 
 
 @parametrize("scope", ["service", "global"])
-def case_non_matching_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_non_matching_simple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """Simple case of leaky bucket limiter with non matching condition. The rate limit should not be applied."""
     configuration = [config(operation_conf(operation="!="), scope)]
     policy_config = leaky_bucket_policy(configuration, redis_url(scope))
@@ -75,7 +73,7 @@ def case_non_matching_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
 
 
 @parametrize("scope", ["service", "global"])
-def case_non_matching_liquid_simple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_non_matching_liquid_simple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """Case with non matching condition using liquid. The rate limit should not be applied."""
     configuration = [
         config(
@@ -87,7 +85,7 @@ def case_non_matching_liquid_simple(scope: str, redis_url) -> Tuple[dict, bool, 
 
 
 @parametrize("scope", ["service", "global"])
-def case_non_matching_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_non_matching_multiple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """
     Case with 2 leaky bucket limiters with non matching condition
         First leaky bucket limiter:
@@ -107,7 +105,7 @@ def case_non_matching_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
 
 
 @parametrize("scope", ["service", "global"])
-def case_non_matching_prepend_multiple(scope: str, redis_url) -> Tuple[dict, bool, str]:
+def case_non_matching_prepend_multiple(scope: str, redis_url) -> tuple[dict, bool, str]:
     """
     Case with 2 leaky bucket limiters with non matching condition
         First leaky bucket limiter:

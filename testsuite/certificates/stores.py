@@ -3,7 +3,6 @@
 import os
 import tempfile
 from abc import ABC
-from typing import Dict
 
 from testsuite.certificates import CertificateStore, Certificate
 
@@ -14,7 +13,7 @@ def _persist(path, name: str, ext: str, content: str):
 
 
 def _read(path, name: str, ext: str) -> str:
-    with open(os.path.join(path, f"{name}.{ext}"), "r", encoding="utf8") as file:
+    with open(os.path.join(path, f"{name}.{ext}"), encoding="utf8") as file:
         content = file.read()
     return content
 
@@ -52,7 +51,7 @@ class InMemoryCertificateStore(CertificateStore):
     """Certificates which stores data in memory, or to be more precise, in a dict"""
 
     def __init__(self) -> None:
-        self.data: Dict[str, Certificate] = {}
+        self.data: dict[str, Certificate] = {}
 
     def __contains__(self, key: str):
         return key in self.data

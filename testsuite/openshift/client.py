@@ -5,7 +5,8 @@ from functools import cached_property
 import json
 import os
 from contextlib import ExitStack
-from typing import List, Dict, Union, Any, Optional, Callable, Sequence
+from typing import Any
+from collections.abc import Callable, Sequence
 
 import openshift_client as oc
 import yaml
@@ -56,7 +57,7 @@ class OpenShiftClient:
     def do_action(
         self,
         verb: str,
-        cmd_args: Sequence[Union[str, Sequence[str]]] = None,
+        cmd_args: Sequence[str | Sequence[str]] = None,
         auto_raise: bool = True,
         parse_output: bool = False,
         no_namespace: bool = False,
@@ -157,7 +158,7 @@ class OpenShiftClient:
         patch_serialized = json.dumps(patch)
         self.do_action("patch", [resource_type, resource_name, cmd_args, "-p", patch_serialized])
 
-    def apply(self, resource: Dict[str, Any]):
+    def apply(self, resource: dict[str, Any]):
         """Apply the specified resource to the server.
         Args:
             :param resource: A dict containing the configuration to be applied
@@ -179,7 +180,7 @@ class OpenShiftClient:
             args.append("-f")
         self.do_action("delete", [resource_type, name, args])
 
-    def delete_app(self, app: str, resources: Optional[str] = None):
+    def delete_app(self, app: str, resources: str | None = None):
         """Removes resources belonging to certain application
         Args:
             :param resources: Types of resources to be deleted, defaults to "all"
@@ -188,14 +189,14 @@ class OpenShiftClient:
         resources = resources or "all"
         self.do_action("delete", [resources, "-l", f"app={app}", "--ignore-not-found"])
 
-    def delete_template(self, template: str, params: Dict[str, str] = None):
+    def delete_template(self, template: str, params: dict[str, str] = None):
         """
         Deletes resources specified in the template after processing it with params
         oc process -f template --param KEY=VALUE --param ... | oc delete -f -
         :param template: template specifying the resources to delete
         :param params: params to process the template with
         """
-        opt_args: List[Union[List, str]] = ["-f", template]
+        opt_args: list[list | str] = ["-f", template]
 
         if params:
             opt_args.extend([f"--param={n}={v}" for n, v in params.items()])
@@ -204,7 +205,7 @@ class OpenShiftClient:
         for resource in processed_tmpl["items"]:
             self.delete(resource["kind"], resource["metadata"]["name"])
 
-    def new_app(self, source, params: Dict[str, str] = None):
+    def new_app(self, source, params: dict[str, str] = None):
         """Create application based on source code.
 
         Args:
@@ -288,8 +289,8 @@ class OpenShiftClient:
     def select_resource(
         self,
         resource: str,
-        labels: Optional[Dict[str, str]] = None,
-        narrow_function: Optional[Callable[[oc.APIObject], bool]] = None,
+        labels: dict[str, str] | None = None,
+        narrow_function: Callable[[oc.APIObject], bool] | None = None,
     ):
         """
         Returns pods, that is filtered with narrow function
@@ -306,7 +307,7 @@ class OpenShiftClient:
                 selector = selector.narrow(narrow_function)
             return selector
 
-    def create(self, definition, cmd_args: Optional[List[str]] = None):
+    def create(self, definition, cmd_args: list[str] | None = None):
         """
         Creates objects from yaml/json representations
 
@@ -328,7 +329,7 @@ class OpenShiftClient:
         """
         self.do_action("create", ["service", service_type.value, name, f"--tcp={port}:{target_port}"])
 
-    def add_labels(self, name: str, object_type: str, labels: List[str]):
+    def add_labels(self, name: str, object_type: str, labels: list[str]):
         """Add labels to the object.
         Args:
             :param name: Object name

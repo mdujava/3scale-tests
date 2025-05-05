@@ -1,7 +1,5 @@
 """UI tests module"""
 
-from typing import List, Dict
-
 
 class Sessions:
     """
@@ -33,7 +31,7 @@ class Sessions:
 
         return False
 
-    def save(self, username, password, url, values: List[Dict]):
+    def save(self, username, password, url, values: list[dict]):
         """
         Saves cookies to sessions dict under the key: (user, password, url)
         :param username: user name used in key for sessions dict

@@ -25,7 +25,7 @@ def generate_tail(tail=5):
 
 def randomize(name, tail=5):
     "To avoid conflicts returns modified name with random sufffix"
-    return "%s-%s" % (name, generate_tail(tail))
+    return "{}-{}".format(name, generate_tail(tail))
 
 
 def _whoami():

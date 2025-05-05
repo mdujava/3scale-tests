@@ -4,8 +4,6 @@ This policy should override others and reject all requests.
 Expected: to return specified code eg 328 and message of service unavailability.
 """
 
-from typing import Tuple
-
 import pytest
 import pytest_cases
 
@@ -23,7 +21,7 @@ pytestmark = [
 
 @pytest_cases.fixture
 @pytest_cases.parametrize_with_cases("case_data", cases=config_cases_path)
-def config(case_data, service) -> Tuple[int, int, str]:
+def config(case_data, service) -> tuple[int, int, str]:
     """returns the policy object with the specified configuration"""
     status_code_test, status_code_get, message, policy_config = case_data
     service.proxy.list().policies.append(rawobj.PolicyConfig("maintenance_mode", policy_config))

@@ -2,8 +2,6 @@
 Check if annotations of operator pod are present
 """
 
-from typing import Tuple, List, Union
-
 import pytest
 from packaging.version import Version  # noqa # pylint: disable=unused-import
 
@@ -17,7 +15,7 @@ pytestmark = [
     pytest.mark.nopersistence,
 ]
 
-ANNOTATIONS_PRE_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+ANNOTATIONS_PRE_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("support", "Red Hat"),
     ("repository", "https://github.com/3scale/3scale-operator"),
     ("operators.operatorframework.io/builder", None),
@@ -26,7 +24,7 @@ ANNOTATIONS_PRE_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
     ("certified", "false"),
 ]
 
-ANNOTATIONS_POST_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+ANNOTATIONS_POST_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("support", "Red Hat"),
     ("repository", "https://github.com/3scale/3scale-operator"),
     ("operators.operatorframework.io/builder", "operator-sdk-v1.2.0"),

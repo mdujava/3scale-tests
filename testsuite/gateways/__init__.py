@@ -6,7 +6,6 @@ import importlib
 import inspect
 import logging
 import pkgutil
-from typing import Type, Union
 
 from testsuite.config import settings
 from testsuite.gateways.gateways import AbstractGateway, Gateway, new_gateway
@@ -31,7 +30,7 @@ default = globals()[settings["threescale"]["gateway"]["default"]["kind"]]
 
 # This could be written much more cleanly without specifying kind,
 # but this version enables typing support if kind is a class
-def gateway(kind: Union[Type[Gateway], str] = default, staging: bool = True, **kwargs) -> Gateway:
+def gateway(kind: type[Gateway] | str = default, staging: bool = True, **kwargs) -> Gateway:
     """
     Return gateway instance of given kind
     Settings priority:

@@ -1,6 +1,5 @@
 """Module containing WASMGateway and its dependencies"""
 
-from typing import Dict
 from urllib.parse import urlparse
 
 import importlib_resources as resources
@@ -38,7 +37,7 @@ class WASMGateway(AbstractGateway):
         self.backend_host = backend_host
         self.base_path = resources.files("testsuite.resources.service_mesh")
 
-        self.extensions: Dict[Service, WASMExtension] = {}
+        self.extensions: dict[Service, WASMExtension] = {}
 
     def before_service(self, service_params: dict) -> dict:
         service_params["deployment_option"] = "service_mesh_istio"

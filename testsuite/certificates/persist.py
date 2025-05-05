@@ -4,7 +4,6 @@ import os
 import shutil
 import tempfile
 from abc import ABC, abstractmethod
-from typing import Dict
 
 
 class TmpFilePersist(ABC):
@@ -25,7 +24,7 @@ class TmpFilePersist(ABC):
     def persist(self):
         """Saves current class to a tmp file"""
 
-    def _persist(self, **kwargs) -> Dict[str, str]:
+    def _persist(self, **kwargs) -> dict[str, str]:
         files = {}
         for key, value in kwargs.items():
             path = os.path.join(self._directory, key)

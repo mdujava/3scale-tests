@@ -2,7 +2,6 @@
 
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Optional, List, Dict, Tuple
 import logging
 
 from openshift_client import OpenShiftPythonException
@@ -30,7 +29,7 @@ class AbstractApicast(AbstractGateway, ABC):
         """Reloads gateway"""
 
     @abstractmethod
-    def get_logs(self, since_time: Optional[datetime] = None) -> str:
+    def get_logs(self, since_time: datetime | None = None) -> str:
         """Gets the logs of the active Apicast pod from specific time"""
 
     def create(self):
@@ -65,9 +64,9 @@ class OpenshiftApicast(AbstractApicast, ABC):
         if generate_name:
             name = f"{name}-stage" if staging else name
             self.name = f"{name}-{utils.randomize(utils._whoami()[:8])}"
-        self._routes: List[str] = []
+        self._routes: list[str] = []
         self._base_route = None
-        self._to_delete: List[Tuple[str, str]] = []
+        self._to_delete: list[tuple[str, str]] = []
 
     @staticmethod
     def fits(openshift: OpenShiftClient):  # pylint: disable=unused-argument
@@ -121,11 +120,11 @@ class OpenshiftApicast(AbstractApicast, ABC):
         if self.path_routing:
             self.add_route(f"base-{self.deployment.name}")
 
-    def before_service(self, service_params: Dict) -> Dict:
+    def before_service(self, service_params: dict) -> dict:
         service_params.update({"deployment_option": "self_managed"})
         return service_params
 
-    def before_proxy(self, service: Service, proxy_params: Dict) -> Dict:
+    def before_proxy(self, service: Service, proxy_params: dict) -> dict:
         if self.path_routing:
             host = self.base_route
         else:

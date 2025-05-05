@@ -2,7 +2,6 @@
 
 import inspect
 import logging
-from typing import Union, Type
 
 from weakget import weakget
 
@@ -40,7 +39,7 @@ class SelfManagedApicast(AbstractApicast):
 
     # pylint: disable=unused-argument
     def __new__(
-        cls, staging: bool, openshift: OpenShiftClient, settings, force: Union[Type[Gateway], str] = None, **kwargs
+        cls, staging: bool, openshift: OpenShiftClient, settings, force: type[Gateway] | str | None = None, **kwargs
     ):
         """
         :param force: The class to use can be defined explicitly
@@ -76,7 +75,7 @@ class SelfManagedApicast(AbstractApicast):
 
     # pylint: disable=unused-argument
     def __init__(
-        self, staging: bool, openshift: OpenShiftClient, settings, force: Union[Type[Gateway], str] = None, **kwargs
+        self, staging: bool, openshift: OpenShiftClient, settings, force: type[Gateway] | str | None = None, **kwargs
     ):
         raise TypeError("SelfManagedApicast should be never created actually")
 

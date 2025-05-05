@@ -27,7 +27,7 @@ class OAS3DropDown(Widget):
         return self.locator
 
     def __repr__(self):
-        return "{}{}".format(type(self).__name__, self.locator)
+        return f"{type(self).__name__}{self.locator}"
 
 
 class Endpoint(ParametrizedView):

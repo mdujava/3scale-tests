@@ -5,8 +5,6 @@ the increase of the metric, respective to the endpoint and returned
 status code, is expected in prometheus.
 """
 
-from typing import Tuple, Dict
-
 import pytest
 import requests
 from packaging.version import Version  # noqa # pylint: disable=unused-import
@@ -147,7 +145,7 @@ def auth_request(backend_listener_url):
     return _auth_request
 
 
-def authrep_backend_api_query(request_type) -> Tuple[str, Dict[str, str]]:
+def authrep_backend_api_query(request_type) -> tuple[str, dict[str, str]]:
     """
     Returns prometheus query parts for the apisonator_listener_response_codes metric
     with the request type passed in the parameters

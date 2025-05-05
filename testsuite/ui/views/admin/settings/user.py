@@ -1,7 +1,6 @@
 """View representations of User Account pages"""
 
 import enum
-from typing import List
 
 from widgetastic.widget import TextInput
 from widgetastic_patternfly4 import PatternflyTable
@@ -90,14 +89,14 @@ class UserDetailView(BaseSettingsView):
         """Allow permissions for all products"""
         self.permissions.uncheck(["user_member_permission_ids_services"])
 
-    def add_permissions(self, scope: List[Scopes]):
+    def add_permissions(self, scope: list[Scopes]):
         """
         Select chosen permissions for the User
         :param scope: List of permissions scopes from class Scopes
         """
         self.permissions.check(scope)
 
-    def remove_permissions(self, scope: List[Scopes]):
+    def remove_permissions(self, scope: list[Scopes]):
         """
         Unselect chosen permissions for the User
         :param scope: List of permissions scopes from class Scopes
@@ -112,14 +111,14 @@ class UserDetailView(BaseSettingsView):
         """Clear permissions for all services"""
         self.access_list.clear_all()
 
-    def add_products_access(self, product_ids: List[int]):
+    def add_products_access(self, product_ids: list[int]):
         """Add access to products by its ids
         :param: product_ids: ID of services to add access to.
         """
         for prod_id in product_ids:
             self.access_list.check([f"user_member_permission_service_ids_{prod_id}"])
 
-    def remove_products_access(self, product_ids: List[int]):
+    def remove_products_access(self, product_ids: list[int]):
         """remove access to products by its ids
         :param: product_ids: ID of services to remove access to.
         """

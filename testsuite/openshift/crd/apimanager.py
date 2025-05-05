@@ -1,7 +1,5 @@
 """Module containing APIManager object"""
 
-from typing import Optional, Set
-
 from openshift_client import APIObject, Missing
 
 
@@ -54,21 +52,21 @@ class APIManager(APIObject):
         field, last_fragment = _locator(path, apiobj)
         return field[last_fragment]
 
-    def ready(self, deployments: Optional[Set[str]] = None):
+    def ready(self, deployments: set[str] | None = None):
         """
         Checks if said deployments are ready or not.
         If no deployments are supplied it will check for all deployments
         """
         return self._status_check(self.model.status.deployments.ready, deployments)
 
-    def stopped(self, deployments: Optional[Set[str]] = None):
+    def stopped(self, deployments: set[str] | None = None):
         """
         Checks if said deployments are stopped or not.
         If no deployments are supplied it will check for all deployments
         """
         return self._status_check(self.model.status.deployments.stopped, deployments)
 
-    def _status_check(self, status, deployments: Optional[Set[str]] = None):
+    def _status_check(self, status, deployments: set[str] | None = None):
         deployments = deployments or self.ALL_DEPLOYMENTS
 
         if status is Missing:

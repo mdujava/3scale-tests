@@ -1,7 +1,6 @@
 """Objects for managing ServiceMesh deployments"""
 
 from contextlib import ExitStack
-from typing import List
 from urllib.parse import urlparse, urlunparse
 
 from openshift_client import Selector
@@ -22,7 +21,7 @@ class ServiceMesh:
         self.openshift = openshift
         self.identifier = identifier
         self._ingress_url = None
-        self._destroy: List[Selector] = []
+        self._destroy: list[Selector] = []
 
     def patch_credentials(self, credentials):
         """Patches credentials of currently tested 3scale into service mesh"""

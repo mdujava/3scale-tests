@@ -1,7 +1,6 @@
 """Widgets that extends OUIAGenericWidget"""
 
 from logging import Logger
-from typing import Optional
 
 from selenium.webdriver.common.by import By
 from widgetastic.types import ViewParent
@@ -31,7 +30,7 @@ class Navigation(ouia.Navigation):
         self,
         parent: ViewParent = None,
         component_id: str = "OUIA-Generated-Nav-1",
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         **kwargs,
     ) -> None:
         super().__init__(

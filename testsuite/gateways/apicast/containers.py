@@ -1,7 +1,5 @@
 """Collection of gateways that run in containerized environment"""
 
-from typing import Dict
-
 from threescale_api.resources import Service
 
 from testsuite.capabilities import Capability
@@ -21,11 +19,11 @@ class ContainerizedApicast(AbstractApicast):
         self.endpoint = endpoint
         self.staging = staging
 
-    def before_service(self, service_params: Dict) -> Dict:
+    def before_service(self, service_params: dict) -> dict:
         service_params.update({"deployment_option": "self_managed"})
         return service_params
 
-    def before_proxy(self, service: Service, proxy_params: Dict) -> Dict:
+    def before_proxy(self, service: Service, proxy_params: dict) -> dict:
         name = service.entity_id
         if self.staging:
             name = f"stage-{name}"

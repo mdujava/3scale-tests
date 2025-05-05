@@ -1,7 +1,5 @@
 """Service mesh gateway"""
 
-from typing import Dict
-
 from threescale_api.resources import Service, Application
 
 from testsuite.capabilities import Capability
@@ -19,7 +17,7 @@ class ServiceMeshGateway(AbstractGateway):
     CAPABILITIES = {Capability.SERVICE_MESH}
 
     def __init__(self, openshift, httpbin, mesh, portal_endpoint) -> None:
-        self.env_vars: Dict[str, str] = {}
+        self.env_vars: dict[str, str] = {}
         self.identifier = generate_tail()
         self.openshift = openshift
         self.httpbin_oc = httpbin

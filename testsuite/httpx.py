@@ -2,7 +2,7 @@
 
 import functools
 import logging
-from typing import Iterable, Generator
+from collections.abc import Iterable, Generator
 
 from httpx import Client, Request, Response, URL, Auth, create_ssl_context, USE_CLIENT_DEFAULT
 from threescale_api.resources import Application, Service

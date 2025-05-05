@@ -60,12 +60,12 @@ def is_expired(response):
 def test_caching_working_correctly(client):
     "content caching is working correctly when matchs"
     origin_localhost = {"origin": "localhost"}
-    path = "/test/{0}".format(uuid.uuid4())
+    path = f"/test/{uuid.uuid4()}"
 
     assert not is_hit(client.get(path, headers=origin_localhost))
 
     for i in range(0, 10):
-        assert is_hit(client.get(path, headers=origin_localhost)), "Request {} didn't hit the cache".format(i)
+        assert is_hit(client.get(path, headers=origin_localhost)), f"Request {i} didn't hit the cache"
 
 
 def test_caching_different_urls_with_same_subpath(client):
@@ -83,7 +83,7 @@ def test_caching_timeouts(client):
     "Validate caching timeouts time"
     origin_localhost = {"origin": "localhost"}
 
-    path = "/test/{0}".format(uuid.uuid4())
+    path = f"/test/{uuid.uuid4()}"
 
     assert not is_hit(client.get(path, headers=origin_localhost))
     assert is_hit(client.get(path, headers=origin_localhost))

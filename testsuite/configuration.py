@@ -1,7 +1,8 @@
 """Module responsible for processing configuration"""
 
 import inspect
-from typing import Dict, Any, Mapping
+from typing import Any
+from collections.abc import Mapping
 
 from weakget import weakget
 
@@ -40,7 +41,7 @@ class SettingsParser(metaclass=Singleton):
 
     def __init__(self) -> None:
         super().__init__()
-        self.kinds: Dict[str, Any] = {}
+        self.kinds: dict[str, Any] = {}
 
     def register_kind(self, provider, kind: str = None):
         """Register new Kind"""

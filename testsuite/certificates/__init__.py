@@ -1,12 +1,11 @@
 """Collection of classes for working with different ssl certificate tools."""
 
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple, Dict
 
 from testsuite.certificates.persist import TmpFilePersist
 
 # Type alias for Names field in certification csrs
-CertificateNames = List[Dict[str, str]]
+CertificateNames = list[dict[str, str]]
 
 
 class Certificate(TmpFilePersist):
@@ -72,7 +71,7 @@ class SigningProvider(ABC):
     """Provider key signing capabilities"""
 
     @abstractmethod
-    def sign(self, key: UnsignedKey, certificate_authority: Optional[Certificate] = None) -> Certificate:
+    def sign(self, key: UnsignedKey, certificate_authority: Certificate | None = None) -> Certificate:
         """Signs the generated key, returns final certificate.
         Args:
             :param key: Key to be signed
@@ -93,7 +92,7 @@ class KeyProvider(ABC):
 
     @abstractmethod
     def generate_key(
-        self, common_name: str, names: Optional[List[Dict[str, str]]] = None, hosts: Optional[List[str]] = None
+        self, common_name: str, names: list[dict[str, str]] | None = None, hosts: list[str] | None = None
     ) -> UnsignedKey:
         """Create a new unsigned key.
         Args:
@@ -107,9 +106,9 @@ class KeyProvider(ABC):
     def generate_ca(
         self,
         common_name: str,
-        names: List[Dict[str, str]],
-        hosts: List[str],
-    ) -> Tuple[Certificate, UnsignedKey]:
+        names: list[dict[str, str]],
+        hosts: list[str],
+    ) -> tuple[Certificate, UnsignedKey]:
         """Creates new CA key, returns both self signed certificate and Unsigned key with CSR
          if we want to make it a intermediate CA
         Args:
@@ -148,9 +147,9 @@ class CertificateManager:
         self,
         label: str,
         common_name: str,
-        hosts: List[str],
-        names: Optional[List[Dict[str, str]]] = None,
-        certificate_authority: Optional[Certificate] = None,
+        hosts: list[str],
+        names: list[dict[str, str]] | None = None,
+        certificate_authority: Certificate | None = None,
     ) -> Certificate:
         """Create a new certificate.
         Args:
@@ -179,10 +178,10 @@ class CertificateManager:
     def create_ca(
         self,
         label: str,
-        hosts: List[str],
-        names: Optional[List[Dict[str, str]]] = None,
-        certificate_authority: Optional[Certificate] = None,
-    ) -> Tuple[Certificate, UnsignedKey]:
+        hosts: list[str],
+        names: list[dict[str, str]] | None = None,
+        certificate_authority: Certificate | None = None,
+    ) -> tuple[Certificate, UnsignedKey]:
         """Create a new certificate authority, if ca is specified it will create an intermediate ca.
         Args:
             :param certificate_authority:

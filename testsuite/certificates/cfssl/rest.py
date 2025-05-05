@@ -1,7 +1,5 @@
 """CFSSL certificate implementation."""
 
-from typing import Optional
-
 import cfssl
 
 from testsuite.certificates import Certificate, SigningProvider, UnsignedKey
@@ -13,7 +11,7 @@ class CFSSLRESTProvider(SigningProvider):  # pylint: disable=too-few-public-meth
     def sign_intermediate_ca(self, key: UnsignedKey, certificate_authority: Certificate = None) -> Certificate:
         return self.sign(key, certificate_authority)
 
-    def sign(self, key: UnsignedKey, certificate_authority: Optional[Certificate] = None) -> Certificate:
+    def sign(self, key: UnsignedKey, certificate_authority: Certificate | None = None) -> Certificate:
         certificate = self.cfssl.sign(key.csr, hosts=[])
         return Certificate(key=key.key, certificate=certificate)
 

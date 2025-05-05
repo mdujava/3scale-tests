@@ -1,7 +1,6 @@
 """View representations of Token pages"""
 
 import enum
-from typing import List
 
 from widgetastic.widget import TextInput, Text
 from widgetastic_patternfly4 import PatternflyTable
@@ -53,7 +52,7 @@ class TokenNewView(BaseSettingsView):
     create_button = ThreescaleSubmitButton()
     token_value = Text(".//div/dt/span[text()='Token']/ancestor::dt/following-sibling::dd")
 
-    def create(self, name: str, scopes: List[Scopes], write: bool):
+    def create(self, name: str, scopes: list[Scopes], write: bool):
         """Create Token"""
         self.name.fill(name)
         self.scopes.check(scopes)

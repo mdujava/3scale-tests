@@ -3,7 +3,8 @@
 import abc
 import re
 import logging
-from typing import TYPE_CHECKING, Match, Dict
+from typing import TYPE_CHECKING
+from re import Match
 
 if TYPE_CHECKING:
     # pylint: disable=cyclic-import
@@ -87,7 +88,7 @@ class Properties(abc.ABC):
     variables"""
 
     @abc.abstractmethod
-    def set_many(self, envs: Dict[str, str]):
+    def set_many(self, envs: dict[str, str]):
         """Allow setting many envs at a time."""
 
     @abc.abstractmethod
@@ -131,7 +132,7 @@ class Environ(Properties):
                     self.__envs[env.name] = env
                     break
 
-    def set_many(self, envs: Dict[str, str]):
+    def set_many(self, envs: dict[str, str]):
         """Allow setting many envs at a time."""
         env_args = []
         for name, value in envs.items():

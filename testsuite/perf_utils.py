@@ -54,7 +54,7 @@ class HyperfoilUtils:
     def add_file(self, path):
         """Adds file to the benchmark"""
         filename = os.path.basename(path)
-        self.factory.file(filename, open(path, "r", encoding="utf8"))
+        self.factory.file(filename, open(path, encoding="utf8"))
 
     def generate_random_file(self, filename: str, size: int):
         """Generates and adds file with such filename and size to the benchmark"""

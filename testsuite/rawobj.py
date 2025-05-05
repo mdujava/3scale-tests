@@ -1,7 +1,7 @@
 # pylint: disable=invalid-name
 "These are constructors to create native 3scale API objects"
 
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from threescale_api import resources
@@ -122,7 +122,7 @@ def ApplicationPlan(
     return obj
 
 
-def AccessToken(name: str, permission: str, scopes: List[str]):
+def AccessToken(name: str, permission: str, scopes: list[str]):
     """Builder of params to create a new Personal AccessToken
     Args:
         :param name: the name of the access token

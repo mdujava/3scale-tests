@@ -2,8 +2,6 @@
 Check if labels of apicast operator pod are present
 """
 
-from typing import Tuple, List, Union
-
 import pytest
 from packaging.version import Version  # noqa # pylint: disable=unused-import
 
@@ -17,12 +15,12 @@ pytestmark = [
     pytest.mark.nopersistence,
 ]
 
-LABELS_PRE_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+LABELS_PRE_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("app", "apicast"),
     ("control-plane", "controller-manager"),
 ]
 
-LABELS_POST_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+LABELS_POST_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("app", "apicast"),
     ("com.company", "Red_Hat"),
     ("control-plane", "controller-manager"),

@@ -498,7 +498,7 @@ def fullpage_screenshot(driver, file_path):
         part = 0
 
         for scroll in range(0, total_height, viewport_height):
-            driver.execute_script("window.scrollTo({0}, {1})".format(0, scroll))
+            driver.execute_script(f"window.scrollTo({0}, {scroll})")
             screenshot_bytes = driver.get_screenshot_as_png()
             screenshot = Image.open(io.BytesIO(screenshot_bytes))
 

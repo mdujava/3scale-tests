@@ -307,7 +307,7 @@ class PolicySection(Widget):
         if self.has_item(policy_name):
             self.item_select(policy_name)
         else:
-            raise ItemNotPresentException("Item {!r} not found.".format(policy_name))
+            raise ItemNotPresentException(f"Item {policy_name!r} not found.")
 
     def drag_and_drop_policy(self, source, destination):
         """Drag and drop element from source element to destination,
@@ -317,9 +317,9 @@ class PolicySection(Widget):
             destination: string : name of destination Policy
         """
         ac = ActionChains(self.browser.selenium)
-        ac.click_and_hold(self.browser.element("./ul/li//article/h3[text()='{}']/../p/span".format(source)))
-        ac.move_to_element(self.browser.element("./ul/li//article/h3[text()='{}']/../p/span".format(destination)))
-        ac.release(self.browser.element("./ul/li//article/h3[text()='{}']/../p/span".format(destination)))
+        ac.click_and_hold(self.browser.element(f"./ul/li//article/h3[text()='{source}']/../p/span"))
+        ac.move_to_element(self.browser.element(f"./ul/li//article/h3[text()='{destination}']/../p/span"))
+        ac.release(self.browser.element(f"./ul/li//article/h3[text()='{destination}']/../p/span"))
         ac.perform()
 
     def has_item(self, item):
@@ -339,14 +339,14 @@ class PolicySection(Widget):
         try:
             return self.browser.element(self.CHAIN_ITEM_LOCATOR.format(item), parent=self)
         except NoSuchElementException:
-            raise ItemNotPresentException("Item {!r} not found.".format(item))
+            raise ItemNotPresentException(f"Item {item!r} not found.")
 
     # pylint: disable=raise-missing-from
     def add_item(self, item):
         """Add policy from policy registry"""
         self.logger.info("Selecting %r", item)
         if item not in self.registry_items:
-            raise ItemNotPresentException('Item "{item}" of policy is not present'.format(item=item))
+            raise ItemNotPresentException(f'Item "{item}" of policy is not present')
         self.browser.click(self.item_element(item))
 
     def item_select(self, item):
@@ -356,7 +356,7 @@ class PolicySection(Widget):
         """
         self.logger.info("Selecting %r", item)
         if not self.has_item(item):
-            raise ItemNotPresentException('Item "{item}" of policy is not present'.format(item=item))
+            raise ItemNotPresentException(f'Item "{item}" of policy is not present')
         self.browser.click(self.item_element(item))
 
 
@@ -403,7 +403,7 @@ class ActiveDocV2Section(Widget):
         try:
             return self.browser.element(self.ITEMS_BUTTON_LOCATOR.format(item), parent=self)
         except NoSuchElementException as exc:
-            raise NoSuchElementException("Item {!r} not found.".format(item)) from exc
+            raise NoSuchElementException(f"Item {item!r} not found.") from exc
 
     @backoff.on_exception(backoff.fibo, NoSuchElementException, max_tries=4, jitter=None)
     def try_it_out(self, method):

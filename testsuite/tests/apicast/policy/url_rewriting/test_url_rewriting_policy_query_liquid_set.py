@@ -2,7 +2,6 @@
 Rewrite spec/functional_specs/policies/url_rewrite_query/query_rewrite_policy_liquid_set_spec.rb
 """
 
-from typing import Dict, List
 from urllib.parse import urlparse
 import pytest
 from testsuite import rawobj
@@ -36,7 +35,7 @@ def all_params(params, funcs):
 
 
 @pytest.fixture(scope="module")
-def query_args_commands(params, funcs) -> List[Dict[str, str]]:
+def query_args_commands(params, funcs) -> list[dict[str, str]]:
     """
     Creates list of query_args_commands used to configure the policy
     """
@@ -57,7 +56,7 @@ def query_args_commands(params, funcs) -> List[Dict[str, str]]:
     return commands
 
 
-def create_command_from_param(param: str, is_func: bool) -> Dict[str, str]:
+def create_command_from_param(param: str, is_func: bool) -> dict[str, str]:
     """
     :param param
     :param is_func: if true the value for param p is '{{ 1000 | p }}

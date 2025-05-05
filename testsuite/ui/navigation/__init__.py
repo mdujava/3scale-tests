@@ -16,7 +16,7 @@ Design of this navigation is based on: https://github.com/RedHatQE/navmazing
 
 import inspect
 from collections import deque
-from typing import TypeVar, Type, Optional
+from typing import TypeVar
 
 from widgetastic.widget import View
 
@@ -61,7 +61,7 @@ class Navigator:
         self.page_chain = deque()
         self.browser = browser
 
-    def navigate(self, cls: Type[CustomView], **kwargs) -> CustomView:
+    def navigate(self, cls: type[CustomView], **kwargs) -> CustomView:
         """
         Perform navigation to specific View. If required by particular steps, args and kwargs
         should be specified. They are later passed to avery step method and mapped to
@@ -81,8 +81,8 @@ class Navigator:
         return cls(self.browser, **filtered_kwargs)
 
     def open(
-        self, cls: Type[CustomView] = None, url: str = None, exact: bool = None, wait_displayed: bool = True, **kwargs
-    ) -> Optional[CustomView]:
+        self, cls: type[CustomView] = None, url: str = None, exact: bool = None, wait_displayed: bool = True, **kwargs
+    ) -> CustomView | None:
         """
         Directly opens desired View, by inserting its `path` in to browser or url
         Args:

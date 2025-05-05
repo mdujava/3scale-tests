@@ -28,18 +28,18 @@ def windows_1252_chars():
     https://tools.ietf.org/html/rfc3986#section-2.3
     Also we need to exclude NUL (%00)
     """
-    chars = set(f"%{char1}{char2}" for char1 in HEX_CHARS for char2 in HEX_CHARS)
+    chars = {f"%{char1}{char2}" for char1 in HEX_CHARS for char2 in HEX_CHARS}
 
     # remove 0-9 chars
-    chars -= set(f"%3{i}" for i in range(10))
+    chars -= {f"%3{i}" for i in range(10)}
     # remove A-O
-    chars -= set(f"%4{char}" for char in HEX_CHARS[1:])
+    chars -= {f"%4{char}" for char in HEX_CHARS[1:]}
     # remove P-Z
-    chars -= set(f"%5{char}" for char in HEX_CHARS[:11])
+    chars -= {f"%5{char}" for char in HEX_CHARS[:11]}
     # remove a-o
-    chars -= set(f"%6{char}" for char in HEX_CHARS[1:])
+    chars -= {f"%6{char}" for char in HEX_CHARS[1:]}
     # remove p-z
-    chars -= set(f"%7{char}" for char in HEX_CHARS[:11])
+    chars -= {f"%7{char}" for char in HEX_CHARS[:11]}
     # remove - . _ ~
     chars -= {"%2D", "%2E", "%5F", "%7E"}
     # remove NUL

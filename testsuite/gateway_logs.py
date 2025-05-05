@@ -75,6 +75,6 @@ def _print_logs(item, start_time, phase, suffix):
 
 def _generate_log_section(name, content):
     """Generates log section"""
-    header = "{:~^80}".format(name)
+    header = f"{name:~^80}"
     footer = "~" * 80
     return "\n".join(text for text in (header, content, footer, "\n"))

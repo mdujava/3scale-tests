@@ -2,8 +2,6 @@
 Check if labels of operator pod are present
 """
 
-from typing import Tuple, List, Union
-
 import pytest
 from packaging.version import Version  # noqa # pylint: disable=unused-import
 
@@ -17,7 +15,7 @@ pytestmark = [
     pytest.mark.nopersistence,
 ]
 
-LABELS_PRE_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+LABELS_PRE_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("com.redhat.component-name", "3scale-operator"),
     ("com.redhat.component-type", "infrastructure"),
     ("com.redhat.component-version", None),
@@ -26,7 +24,7 @@ LABELS_PRE_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
     ("control-plane", "controller-manager"),
 ]
 
-LABELS_POST_2_12: List[Union[Tuple[str, str], Tuple[str, None]]] = [
+LABELS_POST_2_12: list[tuple[str, str] | tuple[str, None]] = [
     ("com.company", "Red_Hat"),
     ("control-plane", "controller-manager"),
     ("rht.comp", "3scale"),

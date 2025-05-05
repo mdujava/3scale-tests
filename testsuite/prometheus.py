@@ -4,7 +4,7 @@ import logging
 import time
 from datetime import datetime, timedelta, timezone
 from math import ceil
-from typing import Optional, Callable, Dict
+from collections.abc import Callable
 from urllib.parse import urljoin
 
 import backoff
@@ -21,7 +21,7 @@ PROMETHEUS_REFRESH = 30
 
 
 # pylint: disable=too-few-public-methods
-def _params(key: str = "", labels: Optional[Dict[str, str]] = None) -> Dict[str, str]:
+def _params(key: str = "", labels: dict[str, str] | None = None) -> dict[str, str]:
     """Generate prometheus query parameter from key and labels.
 
     returns: Formatted query string for Prometheus.
@@ -32,7 +32,7 @@ def _params(key: str = "", labels: Optional[Dict[str, str]] = None) -> Dict[str,
 
     if not labels:
         return {"query": key}
-    return {"query": "%s{%s}" % (key, ",".join(f"{k}='{v}'" for k, v in labels.items()))}
+    return {"query": "{}{{{}}}".format(key, ",".join(f"{k}='{v}'" for k, v in labels.items()))}
 
 
 def get_metrics_keys(metrics: list):
@@ -74,7 +74,7 @@ class PrometheusClient:
 
         return requests.get(url, verify=ssl_verify, headers=self.headers, **kwargs)
 
-    def get_metrics(self, key: str = "", labels: Optional[Dict[str, str]] = None) -> list:
+    def get_metrics(self, key: str = "", labels: dict[str, str] | None = None) -> list:
         """Get a metric by metric key or labels.
 
         Args:
@@ -100,7 +100,7 @@ class PrometheusClient:
         response.raise_for_status()
         return response.json()["data"]["activeTargets"]
 
-    def has_metric(self, metric: str, target: str = "", trigger_request: Optional[Callable] = None) -> bool:
+    def has_metric(self, metric: str, target: str = "", trigger_request: Callable | None = None) -> bool:
         """
         Returns true if the given metric is collected by the current settings
         of prometheus.
@@ -135,7 +135,7 @@ class PrometheusClient:
 
         return has_metric
 
-    def wait_on_next_scrape(self, target_container: str, after: Optional[datetime] = None):
+    def wait_on_next_scrape(self, target_container: str, after: datetime | None = None):
         """Block until next scrape for a container is finished"""
         if after is None:
             after = datetime.now(timezone.utc)

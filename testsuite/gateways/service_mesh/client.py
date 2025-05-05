@@ -1,6 +1,6 @@
 """HttpClient for Service mesh"""
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import requests
 from threescale_api.utils import HttpClient

@@ -2,7 +2,9 @@
 
 import re
 import time
-from typing import Dict, Callable, Pattern, Any, Match, Union
+from typing import Any, Union
+from collections.abc import Callable
+from re import Pattern, Match
 
 from openshift_client import OpenShiftPythonException
 
@@ -16,8 +18,8 @@ from testsuite.openshift.env import Properties
 
 from . import OpenshiftApicast
 
-StrMatcher = Dict[str, Union[str, Callable[[APIcast, Any], Any]]]
-RegexMatcher = Dict[Pattern, Callable[[APIcast, Match, Any], Any]]
+StrMatcher = dict[str, Union[str, Callable[[APIcast, Any], Any]]]
+RegexMatcher = dict[Pattern, Callable[[APIcast, Match, Any], Any]]
 
 
 def apicast_service_list(apicast: APIcast, services: str):
@@ -90,7 +92,7 @@ class OperatorEnviron(Properties):
         else:
             raise NotImplementedError(f"Env variable {name} doesn't exists or is not yet implemented in operator")
 
-    def set_many(self, envs: Dict[str, str]):
+    def set_many(self, envs: dict[str, str]):
         def _update(apicast):
             for name, value in envs.items():
                 self._set(apicast, name, value)

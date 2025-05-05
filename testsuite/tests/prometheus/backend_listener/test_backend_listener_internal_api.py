@@ -6,7 +6,6 @@ metric is expected
 
 import base64
 from datetime import timedelta, datetime, timezone
-from typing import Dict, Tuple
 
 import pytest
 import requests
@@ -90,7 +89,7 @@ def backend_listener_internal_api_endpoint(backend_listener_url, service, applic
     return _backend_listener_internal_api_endpoint
 
 
-def internal_backend_api_query(request_type) -> Tuple[str, Dict[str, str]]:
+def internal_backend_api_query(request_type) -> tuple[str, dict[str, str]]:
     """
     Returns prometheus query parts for the apisonator_listener_internal_api_response_codes metric
     with the request type passed in the parameters

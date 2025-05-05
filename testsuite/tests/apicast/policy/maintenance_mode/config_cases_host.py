@@ -4,11 +4,10 @@ This file contains different cases for testing.
 Every case function have parameter which can be used to configure and test the policy
 """
 
-from typing import Tuple
 from urllib.parse import urlparse
 
 
-def case_eq_host(status_code, echo_api_base_url) -> Tuple[int, str, dict]:
+def case_eq_host(status_code, echo_api_base_url) -> tuple[int, str, dict]:
     """Case path on maintenance"""
     message = "Echo API /test is currently Unavailable"
     policy_config = {
@@ -31,7 +30,7 @@ def case_eq_host(status_code, echo_api_base_url) -> Tuple[int, str, dict]:
     return status_code, f"{message}\n", policy_config
 
 
-def case_matches_host(status_code, echo_api_base_url) -> Tuple[int, str, dict]:
+def case_matches_host(status_code, echo_api_base_url) -> tuple[int, str, dict]:
     """Case regex path on maintenance"""
     message = "Echo API /test is currently Unavailable"
     policy_config = {
@@ -54,7 +53,7 @@ def case_matches_host(status_code, echo_api_base_url) -> Tuple[int, str, dict]:
     return status_code, f"{message}\n", policy_config
 
 
-def case_matches_path(status_code) -> Tuple[int, str, dict]:
+def case_matches_path(status_code) -> tuple[int, str, dict]:
     """Case path on maintenance"""
     message = "Service Unavailable - Maintenance"
     policy_config = {

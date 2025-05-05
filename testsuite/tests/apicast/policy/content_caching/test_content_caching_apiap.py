@@ -97,8 +97,8 @@ def test_caching_working_correctly(request, client_param):
 
     for i in range(10):
         response = api_client.get("/echo-api/working", headers=origin_localhost)
-        assert response.status_code == 200, "Request {} failed".format(i)
-        assert response.headers.get("X-Cache-Status") == "HIT", "Request {} didn't hit the cache".format(i)
+        assert response.status_code == 200, f"Request {i} failed"
+        assert response.headers.get("X-Cache-Status") == "HIT", f"Request {i} didn't hit the cache"
 
 
 def test_other_service_cache(client, client2):

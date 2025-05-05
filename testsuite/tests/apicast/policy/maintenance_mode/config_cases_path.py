@@ -4,10 +4,8 @@ This file contains different cases for testing.
 Every case function have parameter which can be used to configure and test the policy
 """
 
-from typing import Tuple
 
-
-def case_eq_path(status_code) -> Tuple[int, int, str, dict]:
+def case_eq_path(status_code) -> tuple[int, int, str, dict]:
     """Case path on maintenance"""
     message = "Echo API /test is currently Unavailable"
     policy_config = {
@@ -30,7 +28,7 @@ def case_eq_path(status_code) -> Tuple[int, int, str, dict]:
     return status_code, 200, f"{message}\n", policy_config
 
 
-def case_match_path(status_code) -> Tuple[int, int, str, dict]:
+def case_match_path(status_code) -> tuple[int, int, str, dict]:
     """Case regex path on maintenance"""
     message = "Echo API /test is currently Unavailable"
     policy_config = {
@@ -53,7 +51,7 @@ def case_match_path(status_code) -> Tuple[int, int, str, dict]:
     return status_code, 200, f"{message}\n", policy_config
 
 
-def case_service_maintenance(status_code) -> Tuple[int, int, str, dict]:
+def case_service_maintenance(status_code) -> tuple[int, int, str, dict]:
     """Case whole service on maintenance"""
     message = "Service Unavailable - Maintenance"
     policy_config = {"status": status_code, "message": message, "message_content_type": "text/plain; charset=utf-8"}
