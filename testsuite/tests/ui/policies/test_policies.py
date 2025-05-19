@@ -1,8 +1,8 @@
 """Rewrite of spec/ui_specs/policies_spec.rb"""
 
-import pytest
-
 from collections import Counter
+
+import pytest
 from testsuite.ui.views.admin.product.integration.configuration import ProductConfigurationView
 from testsuite.ui.views.admin.product.integration.policies import ProductPoliciesView, Policies
 
@@ -10,6 +10,7 @@ pytestmark = pytest.mark.usefixtures("login")
 
 @pytest.fixture()
 def policy_list():
+    """ generate list of all policies """
     policies = [policy.value for policy in list(Policies)]
     policies.remove("3scale APIcast")  # default policy is not in the policy registry
     policies.remove("fapi")

@@ -1,27 +1,25 @@
 """
 Test that fapi policy fulfills Baseline profile specification.
 """
+from uuid import UUID
 import re
+import pytest
 
 from testsuite import rawobj
-import pytest
-from uuid import UUID
+from testsuite.utils import blame
 from .headers import Headers
 
-import ipdb
-from testsuite.capabilities import Capability
-from testsuite.utils import blame
 
+@pytest.fixture(scope="module")
+def policy_settings():
+    """Set policy settings"""
 
-# @pytest.fixture(scope="module")
-# def policy_settings():
-#     """Set policy settings"""
-#
-#     return rawobj.PolicyConfig("fapi", {})
+    return rawobj.PolicyConfig("fapi", {})
 
 
 @pytest.fixture()
 def custom_id(request):
+    """ FAPI id to be used in a request """
     return blame(request, "fapi-id", 10)
 
 
@@ -40,31 +38,24 @@ def fapi_service(service):
       })
     logging_policy = rawobj.PolicyConfig("logging", {
         "enable_access_logs": False,
-        # "custom_logging": '\"{{request}}\" to service {{service.id}} and {{service.serializable.name}} with request fapi ID: \"{{req.headers.x-fapi-transaction-id}}\" and response fapi ID: \"{{res.headers.x-fapi-transaction-id}}\" \"{{res.headers.server}}\"'}
-        "custom_logging": f'{{{{req.headers.{Headers.TRANSACTION_ID.value}}}}}#{{{{resp.headers.{Headers.TRANSACTION_ID.value}}}}}'}
+        "custom_logging": 
+            f'{{{{req.headers.{Headers.TRANSACTION_ID.value}}}}}#{{{{resp.headers.{Headers.TRANSACTION_ID.value}}}}}'}
         )
     service.proxy.list().policies.insert(1, fapi_policy)
     service.proxy.list().policies.insert(2, logging_policy)
     return service
 
 
+# @pytest.fixture()
+# def the_client(request, api_client, prod_client):
+#     """Set policy settings"""
+#     if request.param == "api_client":
+#         return api_client
+#     if request.param == "prod_client":
+#         return prod_client
 
 
-@pytest.fixture()
-def the_client(request, api_client, prod_client):
-    """Set policy settings"""
-    if request.param == "api_client":
-        return api_client
-    if request.param == "prod_client":
-        return prod_client
-
-
-
-
-## todo testy na self managed apicastu
-# @pytest.mark.disruptive
-# @pytest.mark.required_capabilities(Capability.PRODUCTION_GATEWAY)
-# @pytest.mark.parametrize("the_client", ["api_client", "prod_client"], indirect=True)
+# pylint: disable=unused-argument
 def test_x_fapi_header_provided(custom_id, staging_gateway, api_client, application, fapi_service):
     """
         Test that requests on product with fapi policy returns correct x-fapi-transaction-id header
@@ -87,14 +78,12 @@ def test_x_fapi_header_provided(custom_id, staging_gateway, api_client, applicat
     assert fapi_id == trans_id
 
     logs = staging_gateway.get_logs()
-    match = re.search(f"{custom_id}#{custom_id}", logs, re.MULTILINE)  # todo pridat response
+    match = re.search(f"{custom_id}#{custom_id}", logs, re.MULTILINE)  #TODO: add response
     assert match is not None
 
 
-# @pytest.mark.disruptive
-# @pytest.mark.required_capabilities(Capability.PRODUCTION_GATEWAY)
-# @pytest.mark.parametrize("the_client", ["api_client", "prod_client"], indirect=True)
-def test_x_fapi_header_created (staging_gateway, api_client, application, fapi_service):  # todo parametricke gatewaye
+# pylint: disable=unused-argument
+def test_x_fapi_header_created (staging_gateway, api_client, application, fapi_service):  #TODO: parametrize gateway
     """
         todo
 
@@ -120,9 +109,8 @@ def test_x_fapi_header_created (staging_gateway, api_client, application, fapi_s
         ("anything", False)
     ],
 )
+# pylint: disable=unused-argument
 def test_x_fapi_customer_ip(ip, ok, api_client, application, fapi_service):
     client = api_client()
     resp = client.get("/", headers={Headers.CUSTOMER_IP_ADDR.value: ip})
     assert resp.ok == ok
-
-

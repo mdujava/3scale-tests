@@ -305,7 +305,7 @@ class PolicySection(View):
         """Opens the Policy registry list and adds a policy by its name.
         :param policy_name: Name of the policy to be added
         """
-        self.browser.click(self.ADD_POLICY_LOC, parent=self)
+        self.browser.click(self.ADD_POLICY_LOCATOR, parent=self)
         self.add_item(policy_name)
 
     def edit_policy(self, policy_name):
