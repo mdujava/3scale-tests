@@ -42,14 +42,31 @@ def app_plan(service, custom_app_plan, request):
 
 
 @pytest.fixture(scope="module")
+def service_query(backends_mapping, custom_service, lifecycle_hooks, request):
+    """Second service with credentials_location=query"""
+    return custom_service(
+        {"name": blame(request, "svc"), "backend_version": Service.AUTH_APP_ID_KEY},
+        rawobj.Proxy(credentials_location="query"),
+        backends_mapping,
+        hooks=lifecycle_hooks,
+    )
+
+
+@pytest.fixture(scope="module")
+def app_plan_query(service_query, custom_app_plan, request):
+    """Reuse application plan for all query applications"""
+    return custom_app_plan(rawobj.ApplicationPlan(blame(request, "aplan")), service_query)
+
+
+@pytest.fixture(scope="module")
 # pylint: disable=too-many-arguments
-def application(app_id, app_key, credentials_location, service, custom_application, app_plan, lifecycle_hooks, request):
+def application(
+    app_id, app_key, credentials_location, custom_application, app_plan, app_plan_query, lifecycle_hooks, request
+):
     "application bound to the account and service existing over whole testing session"
-    plan = app_plan
+    plan = app_plan if credentials_location == "headers" else app_plan_query
     app_obj = rawobj.Application(blame(request, "app"), plan, app_id=app_id, app_key=app_key)
     app = custom_application(app_obj, hooks=lifecycle_hooks)
-    service.proxy.list().update({"credentials_location": credentials_location})
-    service.proxy.deploy()
     return app
 
 
